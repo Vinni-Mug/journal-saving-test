@@ -1,0 +1,189 @@
+\documentclass[12pt,openany]{book} % openany = avoid blank pages between chapters
+
+% PAGE LAYOUT
+%\usepackage[
+%  paperwidth=6in,      % Max’s journal feel: smaller width
+%  papesrc/ABeginning.texrheight=9in,     % proportion like a small notebook
+%  top=1in, bottom=1in,
+%  inner=0.8in, outer=0.8in
+%]{geometry}
+
+\usepackage[
+paperwidth=6.5in, 
+paperheight=8in, 
+top=0.5in, bottom=0.5in, 
+left=0.7in, right=0.7in
+]{geometry}
+
+% LANGUAGE & ENCODING
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{comment}
+\usepackage{pdfpages}
+
+\usepackage[hidelinks]{hyperref}  % With this option, the document allows inner links (Clickable features)> With the "hidelinks" option, there will be no box or change of color for any given hiperref.
+
+
+% FONTS
+\usepackage{fontspec} % If you compile with XeLaTeX or LuaLaTeX
+\setmainfont{Dudu_Calligraphy}%[Ligatures=TeX] % handwriting style font, install locally or use Overleaf's font list
+
+% IMAGES
+\usepackage{graphicx}
+\usepackage{wrapfig} % for wrapping text around images
+\usepackage{float}   % better control for figure placement
+
+% >PAGE COLOR
+\usepackage{xcolor}
+\definecolor{diaryyellow}{RGB}{240, 234, 220} % Light yellow color
+\pagecolor{diaryyellow} % Set page color
+
+% DOCUMENT SETUP
+\hypersetup{
+	pdfauthor={Norman Whittlecliff},
+	pdftitle={Norman's Diaries},
+	pdfsubject={The many diaries of Norman},
+	pdfkeywords={Journal, Diary, Norman},
+	pdfproducer={LaTeX and TikZ},
+	pdfcreator={pdflatex},
+}
+
+\usepackage{titlesec}
+
+% Remove the section number from printed titles
+\titleformat{\section}
+{\normalfont\Large\bfseries} % format
+{}                           % label (empty = no number printed)
+{-10pt}                        % separation
+{}           % before-code (optional, can drop \thesection entirely)
+%■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+% >COMMANDS: Diary Entry
+
+\newcommand{\partNoNumber}[1]{%
+	\phantomsection \part*{#1} \addcontentsline{toc}{part}{#1}\markright{\MakeUppercase{#1}}%
+}
+
+\newcommand{\chapterNoNumber}[1]{%
+	\phantomsection \chapter*{#1} \addcontentsline{toc}{chapter}{#1}\markboth{\MakeUppercase{#1}}{\MakeUppercase{#1}}%
+}
+
+\newcommand{\sectionNoNumber}[1]{%
+	\phantomsection \section*{#1} \addcontentsline{toc}{section}{#1}\markright{\MakeUppercase{#1}}%
+}
+
+\newcommand{\subsectionNoNumber}[1]{%
+	%\phantomsection \subsection*{#1} \addcontentsline{toc}{subsection}{- #1} % Add to TOC
+	\phantomsection\quad\\ \noindent{\large#1} \addcontentsline{toc}{subsection}{#1}
+	%\markright{\MakeUppercase{#1}}%
+}
+
+
+\newcommand{\peopleGroup}[1]{%
+	\phantomsection \chapter*{#1} \addcontentsline{toc}{chapter}{#1}
+}
+
+\newcommand{\person}[1]{%
+	\phantomsection \section*{#1} \addcontentsline{toc}{section}{#1}\markright{\MakeUppercase{#1}}%
+}
+
+
+
+\newcommand{\printedPhoto}[2]{%
+%\par\noindent
+  \begingroup
+    \setlength{\fboxsep}{6pt}
+    \setlength{\fboxrule}{0pt}
+    \makebox[0pt][l]{%
+      \fcolorbox{white}{white}{%
+        \includegraphics[width=#1]{#2}%
+      }%
+    }%
+  \endgroup
+  \par
+}
+
+\newcommand{\polaroid}[2]{%
+%\par\noindent
+  \begingroup
+    \setlength{\fboxsep}{6pt}
+    \setlength{\fboxrule}{0pt}
+    \fcolorbox{white}{white}{%
+      \begin{minipage}{#1}
+        \includegraphics[width=\linewidth]{#2}
+        \vspace{0.7cm}
+      \end{minipage}
+    }%
+  \endgroup
+  \par
+}
+
+\newcommand{\polaroidCaption}[3]{%
+%\par\noindent
+  \begingroup
+    \setlength{\fboxsep}{6pt}
+    \setlength{\fboxrule}{1pt}
+    \fcolorbox{white}{white}{%
+      \begin{minipage}{#1}
+        \includegraphics[width=\linewidth]{#2}
+        \vspace{0.4cm}
+        \centering
+        {\small #3}
+        \vspace{0.4cm}
+      \end{minipage}
+    }%
+  \endgroup
+  \par
+}
+
+
+% Use this method to add a image to the journal that can have wrapped text and a caption. The image will sit by the left side fo the page.
+% WAY TOO BUGGY. FORGET IT.
+\newcommand{\insertImageLeftWithCaption}[1]{%
+	\begin{wrapfigure}{l}{0.4\textwidth} % r = right, l = left
+		\centering
+		\includegraphics[width=0.38\textwidth]{images/#1}
+		%\caption{Inside the caption}
+	\end{wrapfigure}
+}
+
+% Use this method to add a image to the journal that can have wrapped text and a caption. The image will sit by the left side fo the page.
+% WAY TOO BUGGY. FORGET IT.
+\newcommand{\insertImageRightWithCaption}[1]{%
+	\begin{wrapfigure}{r}{0.4\textwidth} % r = right, l = left
+		\centering
+		\includegraphics[width=0.38\textwidth]{images/#1}
+		%\caption{Inside the caption}
+	\end{wrapfigure}
+}
+
+\newcommand{\langtext}[3]{\textsf{\textit{#1}}\footnote{#1: (From the #2: #3)}}
+
+%■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+\begin{document}
+	
+	\frontmatter
+	\title{Norman’s Diaries}
+	\author{Norman Santos}
+	
+	\maketitle
+	
+	\tableofcontents
+	
+	\mainmatter
+	%■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+	\input{src/_Beginning}
+	
+	%\input{src/Quotes}
+    
+	\input{src/Diary}
+	%\input{src/Diary2002-2023}
+	%\input{src/Diary2024}
+	%\input{src/Diary2025}
+	%\input{src/Diary2026}
+	
+	%date\input{src/Notes}
+	
+	\input{src/_Ending}
+\end{document}
+%■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
